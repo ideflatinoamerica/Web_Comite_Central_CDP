@@ -1,0 +1,6 @@
+{
+  "name": "Comité Central UEP CDP 2026-2027",
+  "description": "Plataforma oficial de la comunidad de familias de la UEP Concentración Deportiva de Pichincha: plan de 8 ejes, agenda deportiva, rendición de cuentas y propuestas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

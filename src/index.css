@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #93000f;
+  --color-primary-container: #bd101b;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #ffcdc8;
+  --color-primary-fixed: #ffdad6;
+  --color-primary-fixed-dim: #ffb4ac;
+  --color-on-primary-fixed: #410003;
+  --color-on-primary-fixed-variant: #93000f;
+  
+  --color-secondary: #af2d2e;
+  --color-secondary-container: #fe6761;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #69000b;
+  --color-secondary-fixed: #ffdad7;
+  --color-secondary-fixed-dim: #ffb3ae;
+  --color-on-secondary-fixed: #410004;
+  --color-on-secondary-fixed-variant: #8e121a;
+
+  --color-tertiary: #5d4300;
+  --color-tertiary-container: #7b5900;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #ffd37f;
+  --color-tertiary-fixed: #ffdea4;
+  --color-tertiary-fixed-dim: #fdbb12;
+  --color-on-tertiary-fixed: #261900;
+  --color-on-tertiary-fixed-variant: #5d4200;
+
+  --color-surface: #fcf9f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-bright: #fcf9f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-surface-container-high: #eae7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-surface-variant: #e5e2e1;
+  --color-surface-tint: #bd101b;
+
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #5c403d;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f3f0ef;
+  --color-inverse-primary: #ffb4ac;
+
+  --color-outline: #906f6c;
+  --color-outline-variant: #e5bdb9;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-background: #fcf9f8;
+  --color-on-background: #1c1b1b;
+
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Manrope", sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    background-color: #fcf9f8;
+    color: #1c1b1b;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
+  }
+}
+
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+}
+
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top, 0px), 0px);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
