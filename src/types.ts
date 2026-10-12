@@ -63,3 +63,18 @@ export interface DocumentItem {
   date: string;
   summary: string;
 }
+
+export interface ExpenseCategory {
+  id: string;
+  name: string;
+}
+
+export interface Expense {
+  id: string;
+  categoryId: string;
+  concept: string;
+  amount: number;
+  date: string;
+  receipt: string;
+  responsible: string;
+}

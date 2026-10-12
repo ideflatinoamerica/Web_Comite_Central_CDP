@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
-import { TabType } from '../types';
+import { PlanAxis, TabType } from '../types';
 import { ASSETS, LEADERSHIP_TEAM } from '../data/initialData';
 
 interface InicioViewProps {
   onNavigate: (tab: TabType, extra?: any) => void;
   onShowToast: (msg: string) => void;
+  axes: PlanAxis[];
+  completedAxisIds: string[];
 }
 
-export const InicioView: React.FC<InicioViewProps> = ({ onNavigate, onShowToast }) => {
+export const InicioView: React.FC<InicioViewProps> = ({
+  onNavigate,
+  onShowToast,
+  axes,
+  completedAxisIds
+}) => {
   const [isLegalExpanded, setIsLegalExpanded] = useState(false);
   const [selectedNews, setSelectedNews] = useState<string | null>(null);
+  const [showAxesPanel, setShowAxesPanel] = useState(false);
+  const completedCount = axes.filter((axis) => completedAxisIds.includes(axis.id)).length;
 
   const newsItems = [
     {
@@ -127,8 +136,75 @@ export const InicioView: React.FC<InicioViewProps> = ({ onNavigate, onShowToast 
               </span>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setShowAxesPanel(true)}
+            className="mt-3 w-full min-h-11 px-4 py-2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-xs sm:text-sm font-bold flex items-center justify-between gap-3 shadow-sm"
+          >
+            <span>Ajustes óptimos</span>
+            <span className="bg-on-tertiary-fixed text-tertiary-fixed px-2.5 py-0.5 rounded-full">
+              {completedCount}/{axes.length}
+            </span>
+          </button>
         </div>
       </section>
+
+      {showAxesPanel && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-5">
+          <div
+            role="dialog"
+            aria-labelledby="axes-progress-title"
+            className="w-full max-w-md bg-surface-container-lowest rounded-3xl p-7 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[85vh] overflow-y-auto"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h3 id="axes-progress-title" className="font-headline font-bold text-lg text-on-surface">
+                  Ajustes óptimos {completedCount}/{axes.length}
+                </h3>
+                <p className="text-xs text-on-surface-variant mt-1">
+                  Los ejes ya completados aparecen tachados.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAxesPanel(false)}
+                className="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant"
+                aria-label="Cerrar avance de ejes"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+            <ol className="space-y-2">
+              {axes.map((axis) => {
+                const done = completedAxisIds.includes(axis.id);
+                return (
+                  <li
+                    key={axis.id}
+                    className={`flex items-start gap-2 rounded-2xl px-3 py-2.5 text-sm ${
+                      done ? 'bg-surface-container-low text-on-surface-variant line-through' : 'bg-surface-container text-on-surface'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[18px] shrink-0">
+                      {done ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                    <span>
+                      <span className="font-bold">{axis.code}.</span> {axis.title}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+            <button
+              type="button"
+              onClick={() => setShowAxesPanel(false)}
+              className="btn-action w-full bg-primary text-on-primary"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Quick Access Tactical Widget */}
       <section className="w-full">

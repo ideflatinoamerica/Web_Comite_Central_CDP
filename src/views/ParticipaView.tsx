@@ -338,7 +338,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-12 rounded-lg bg-primary text-on-primary text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-sm active:bg-primary-container hover:bg-primary-container transition-all disabled:opacity-70"
+              className="btn-action w-full bg-primary text-on-primary text-sm shadow-sm active:bg-primary-container hover:bg-primary-container transition-all disabled:opacity-70"
             >
               {isSubmitting ? (
                 <>
@@ -570,7 +570,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
           <button
             type="button"
             onClick={() => setIsSponsorModalOpen(true)}
-            className="w-full h-11 rounded-lg bg-on-background text-surface text-xs sm:text-sm font-bold flex items-center justify-center gap-2 active:bg-primary hover:bg-black transition-colors"
+            className="btn-action w-full bg-on-background text-surface text-sm active:bg-primary hover:bg-black transition-colors"
           >
             <span className="material-symbols-outlined text-[18px]">verified</span>
             Postular Alianza o Patrocinio
@@ -675,7 +675,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
             </div>
           </div>
           <a
-            className="w-full h-11 rounded-lg bg-primary text-on-primary text-xs sm:text-sm font-bold flex items-center justify-center gap-2 active:scale-[0.99] transition-transform shadow-sm hover:bg-primary-container"
+            className="btn-action w-full bg-primary text-on-primary text-sm active:scale-[0.99] transition-transform shadow-sm hover:bg-primary-container"
             href="mailto:comite.central@uepcdp.edu.ec"
             onClick={() => onShowToast('Abriendo cliente de correo institucional')}
           >
@@ -688,7 +688,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
       {/* MODAL FLOTANTE INTERACTIVO DE POSTULACIÓN DE PATROCINIO */}
       {isSponsorModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4 animate-in fade-in">
-          <div className="w-full max-w-md bg-surface-container-lowest rounded-t-2xl sm:rounded-2xl p-4 sm:p-5 max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl border border-outline-variant/30">
+          <div className="w-full max-w-md bg-surface-container-lowest rounded-t-3xl sm:rounded-3xl p-6 sm:p-7 max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl border border-outline-variant/30">
             <div className="flex items-center justify-between border-b border-surface-variant pb-2">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary text-[22px]">
@@ -763,17 +763,17 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
                 />
               </div>
 
-              <div className="pt-2 flex gap-2">
+              <div className="btn-row pt-2">
                 <button
                   type="button"
-                  className="flex-1 h-11 rounded-lg bg-surface-container-high text-on-surface-variant font-bold text-xs"
+                  className="btn-action flex-1 bg-surface-container-high text-on-surface-variant"
                   onClick={() => setIsSponsorModalOpen(false)}
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 h-11 rounded-lg bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary-container"
+                  className="btn-action flex-1 bg-primary text-on-primary shadow-md hover:bg-primary-container"
                 >
                   Enviar Postulación
                 </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TabType, UserRole, Proposal, SponsorApplication, ProposalCategory } from './types';
+import { TabType, UserRole, Proposal, SponsorApplication, ProposalCategory, Expense, ExpenseCategory } from './types';
 import { Header } from './components/Header';
 import { BottomNav } from './components/BottomNav';
 import { AdminDrawer } from './components/AdminDrawer';
@@ -8,7 +8,8 @@ import { PlanView } from './views/PlanView';
 import { AgendaView } from './views/AgendaView';
 import { CuentasView } from './views/CuentasView';
 import { ParticipaView } from './views/ParticipaView';
-import { INITIAL_AXES, INITIAL_EVENTS } from './data/initialData';
+import { INITIAL_AXES, INITIAL_EVENTS, INITIAL_EXPENSE_CATEGORIES, INITIAL_EXPENSES, INITIAL_COMPLETED_AXES } from './data/initialData';
+import { WelcomeModal } from './components/WelcomeModal';
 
 const INITIAL_MOCK_PROPOSALS: Proposal[] = [
   {
@@ -97,6 +98,42 @@ export default function App() {
     return {};
   });
 
+  const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(() => {
+    const saved = localStorage.getItem('uep_expense_categories');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return INITIAL_EXPENSE_CATEGORIES;
+      }
+    }
+    return INITIAL_EXPENSE_CATEGORIES;
+  });
+
+  const [expenses, setExpenses] = useState<Expense[]>(() => {
+    const saved = localStorage.getItem('uep_expenses');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return INITIAL_EXPENSES;
+      }
+    }
+    return INITIAL_EXPENSES;
+  });
+
+  const [completedAxisIds] = useState<string[]>(() => {
+    const saved = localStorage.getItem('uep_completed_axes');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return INITIAL_COMPLETED_AXES;
+      }
+    }
+    return INITIAL_COMPLETED_AXES;
+  });
+
   const [bookmarkedEvents, setBookmarkedEvents] = useState<Record<string, boolean>>(() => {
     const saved = localStorage.getItem('uep_bookmarks');
     if (saved) {
@@ -129,6 +166,18 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('uep_bookmarks', JSON.stringify(bookmarkedEvents));
   }, [bookmarkedEvents]);
+
+  useEffect(() => {
+    localStorage.setItem('uep_expense_categories', JSON.stringify(expenseCategories));
+  }, [expenseCategories]);
+
+  useEffect(() => {
+    localStorage.setItem('uep_expenses', JSON.stringify(expenses));
+  }, [expenses]);
+
+  useEffect(() => {
+    localStorage.setItem('uep_completed_axes', JSON.stringify(completedAxisIds));
+  }, [completedAxisIds]);
 
   // Toast auto dismiss
   const showToast = (msg: string) => {
@@ -170,6 +219,14 @@ export default function App() {
     setSponsors((prev) => [spon, ...prev]);
   };
 
+  const handleAddExpenseCategory = (name: string) => {
+    setExpenseCategories((prev) => [...prev, { id: `cat-${Date.now()}`, name }]);
+  };
+
+  const handleAddExpense = (expense: Omit<Expense, 'id'>) => {
+    setExpenses((prev) => [{ id: `exp-${Date.now()}`, ...expense }, ...prev]);
+  };
+
   // Update proposal status (Admin action)
   const handleUpdateProposalStatus = (id: string, status: Proposal['status']) => {
     setProposals((prev) =>
@@ -204,6 +261,8 @@ export default function App() {
           <InicioView
             onNavigate={handleNavigate}
             onShowToast={showToast}
+            axes={INITIAL_AXES}
+            completedAxisIds={completedAxisIds}
           />
         )}
 
@@ -229,6 +288,10 @@ export default function App() {
         {activeTab === 'cuentas' && (
           <CuentasView
             onShowToast={showToast}
+            categories={expenseCategories}
+            expenses={expenses}
+            onAddCategory={handleAddExpenseCategory}
+            onAddExpense={handleAddExpense}
           />
         )}
 
@@ -260,6 +323,8 @@ export default function App() {
         onUpdateProposalStatus={handleUpdateProposalStatus}
         onShowToast={showToast}
       />
+
+      <WelcomeModal />
 
       {/* Floating Micro Toast Notification */}
       {toastMessage && (

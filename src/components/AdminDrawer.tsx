@@ -42,7 +42,7 @@ export const AdminDrawer: React.FC<AdminDrawerProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-      <div className="w-full max-w-lg bg-surface-container-lowest rounded-2xl p-5 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[90vh] flex flex-col">
+      <div className="w-full max-w-lg bg-surface-container-lowest rounded-3xl p-7 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-surface-variant pb-3 shrink-0">
           <div className="flex items-center gap-2">
@@ -97,7 +97,7 @@ export const AdminDrawer: React.FC<AdminDrawerProps> = ({
           <button
             type="button"
             onClick={handleExportAll}
-            className="px-2.5 py-1.5 bg-surface-container-high text-on-surface rounded-lg text-xs font-bold flex items-center gap-1 hover:bg-surface-variant transition-colors"
+            className="btn-action bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors"
           >
             <span className="material-symbols-outlined text-[16px]">file_download</span>
             <span className="hidden sm:inline">Exportar</span>
@@ -238,7 +238,7 @@ export const AdminDrawer: React.FC<AdminDrawerProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold hover:bg-primary-container"
+            className="btn-action bg-primary text-on-primary hover:bg-primary-container"
           >
             Cerrar
           </button>

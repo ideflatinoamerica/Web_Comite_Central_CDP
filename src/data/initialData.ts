@@ -1,4 +1,4 @@
-import { PlanAxis, AgendaEvent, DocumentItem } from '../types';
+import { PlanAxis, AgendaEvent, DocumentItem, ExpenseCategory, Expense } from '../types';
 
 export const ASSETS = {
   logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBS5nlFajpCspT-4K_EcVyNzlZyJm3CZCQh5XKM2AwimO7RbDcu0HA-Vwdv1kqHJWOvr-c6-VLIdU6E-zO9GegftFGcmW1QnWpkBld32FaD6lsoaSHW8TQHTBR9u-2_1qH3Nu5WbJDEEbiYp_Rlt23QcioouZZkDYK_xnvroIATm5IjTCsNwJoCuQzg-gLGoMmirxOfgMdeCcAgUDkfsWgKbh5p3gt9mwBZVh0B_aUC9cHfmJbaCf5J',
@@ -302,3 +302,61 @@ export const LEADERSHIP_TEAM = [
     email: 'bienestar@uepcdp.edu.ec'
   }
 ];
+
+export const INITIAL_EXPENSE_CATEGORIES: ExpenseCategory[] = [
+  { id: 'cat-deportes', name: 'Deportes y campeonatos' },
+  { id: 'cat-mantenimiento', name: 'Mantenimiento y logística' },
+  { id: 'cat-admin', name: 'Gastos administrativos' },
+  { id: 'cat-salud', name: 'Botiquín y salud' }
+];
+
+export const INITIAL_EXPENSES: Expense[] = [
+  {
+    id: 'exp-1',
+    categoryId: 'cat-salud',
+    concept: 'Insumos de botiquín de pista',
+    amount: 45.2,
+    date: '12 Oct 2026',
+    receipt: 'Fac. #001-002-8921',
+    responsible: 'Ing. Diana Ávila'
+  },
+  {
+    id: 'exp-2',
+    categoryId: 'cat-deportes',
+    concept: 'Arbitraje selectivo de taekwondo',
+    amount: 60,
+    date: '08 Oct 2026',
+    receipt: 'Fac. #002-010-4412',
+    responsible: 'Lcdo. Sergio Lira'
+  },
+  {
+    id: 'exp-3',
+    categoryId: 'cat-admin',
+    concept: 'Actas de asamblea y libros',
+    amount: 18.5,
+    date: '03 Oct 2026',
+    receipt: 'Fac. #001-001-1184',
+    responsible: 'Secretaría del Comité'
+  },
+  {
+    id: 'exp-4',
+    categoryId: 'cat-mantenimiento',
+    concept: 'Iluminación de pista de entrenamiento',
+    amount: 86.27,
+    date: '28 Sep 2026',
+    receipt: 'Fac. #001-004-2201',
+    responsible: 'Ing. Diana Ávila'
+  },
+  {
+    id: 'exp-5',
+    categoryId: 'cat-deportes',
+    concept: 'Transporte a selectivo provincial',
+    amount: 120,
+    date: '20 Sep 2026',
+    receipt: 'Fac. #003-008-5510',
+    responsible: 'Comisión de Deportes'
+  }
+];
+
+/** Eje 01 queda completado para que el aviso de inicio muestre 1/8. */
+export const INITIAL_COMPLETED_AXES = ['eje-01'];

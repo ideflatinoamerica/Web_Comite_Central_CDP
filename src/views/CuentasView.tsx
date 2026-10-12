@@ -1,17 +1,87 @@
 import React, { useState } from 'react';
-import { DocumentItem } from '../types';
+import { DocumentItem, Expense, ExpenseCategory } from '../types';
 import { INITIAL_DOCUMENTS } from '../data/initialData';
 import { downloadFile } from '../utils/documentGenerator';
 
+type ExpenseTab = 'lista' | 'registrar' | 'config';
+
 interface CuentasViewProps {
   onShowToast: (msg: string) => void;
+  categories: ExpenseCategory[];
+  expenses: Expense[];
+  onAddCategory: (name: string) => void;
+  onAddExpense: (expense: Omit<Expense, 'id'>) => void;
 }
 
-export const CuentasView: React.FC<CuentasViewProps> = ({ onShowToast }) => {
+const formatMoney = (value: number) =>
+  `$${value.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+export const CuentasView: React.FC<CuentasViewProps> = ({
+  onShowToast,
+  categories,
+  expenses,
+  onAddCategory,
+  onAddExpense
+}) => {
   const [period, setPeriod] = useState<'current' | 'past'>('current');
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const [showReceiptsModal, setShowReceiptsModal] = useState(false);
   const [selectedDocPreview, setSelectedDocPreview] = useState<DocumentItem | null>(null);
+  const [expenseTab, setExpenseTab] = useState<ExpenseTab>('lista');
+  const [categoryName, setCategoryName] = useState('');
+  const [expenseForm, setExpenseForm] = useState({
+    date: '12 Oct 2026',
+    categoryId: categories[0]?.id ?? '',
+    concept: '',
+    amount: '',
+    receipt: '',
+    responsible: ''
+  });
+
+  const categoryNameById = (id: string) =>
+    categories.find((category) => category.id === id)?.name ?? 'Sin categoría';
+
+  const handleAddCategory = (event: React.FormEvent) => {
+    event.preventDefault();
+    const name = categoryName.trim();
+    if (!name) {
+      onShowToast('Escribe el nombre de la categoría');
+      return;
+    }
+    if (categories.some((category) => category.name.toLowerCase() === name.toLowerCase())) {
+      onShowToast('Esa categoría ya existe');
+      return;
+    }
+    onAddCategory(name);
+    setCategoryName('');
+    onShowToast('Categoría creada');
+  };
+
+  const handleRegisterExpense = (event: React.FormEvent) => {
+    event.preventDefault();
+    const amount = Number(expenseForm.amount.replace(',', '.'));
+    if (!expenseForm.concept.trim() || !expenseForm.categoryId || !Number.isFinite(amount) || amount <= 0) {
+      onShowToast('Completa concepto, categoría y un monto válido');
+      return;
+    }
+    onAddExpense({
+      categoryId: expenseForm.categoryId,
+      concept: expenseForm.concept.trim(),
+      amount,
+      date: expenseForm.date.trim() || '12 Oct 2026',
+      receipt: expenseForm.receipt.trim() || 'Sin comprobante',
+      responsible: expenseForm.responsible.trim() || 'Tesorería'
+    });
+    setExpenseForm((prev) => ({
+      ...prev,
+      concept: '',
+      amount: '',
+      receipt: '',
+      responsible: ''
+    }));
+    setExpenseTab('lista');
+    onShowToast('Gasto registrado. Ya aparece en Lista');
+  };
 
   const toggleFaq = (id: string) => {
     setExpandedFaq(expandedFaq === id ? null : id);
@@ -51,6 +121,172 @@ Firmado por:
 
   return (
     <div className="flex flex-col w-full pb-6 space-y-4">
+      <section className="bg-surface-container-lowest rounded-3xl p-4 shadow-sm border border-outline-variant/20 space-y-3">
+        <div>
+          <h2 className="font-headline font-bold text-sm text-on-surface">Gastos del comité</h2>
+          <p className="text-[11px] text-on-surface-variant">
+            Las categorías se crean en Configuración. Lista muestra lo registrado y Registrar anota un gasto nuevo.
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-2 bg-surface-container-low p-1 rounded-full">
+          {(
+            [
+              { id: 'lista', label: 'Lista' },
+              { id: 'registrar', label: 'Registrar' },
+              { id: 'config', label: 'Configuración' }
+            ] as const
+          ).map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setExpenseTab(tab.id)}
+              className={`min-h-11 px-2 rounded-full text-xs font-bold transition-all ${
+                expenseTab === tab.id
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {expenseTab === 'lista' && (
+          <div className="space-y-2">
+            {expenses.length === 0 ? (
+              <p className="text-xs text-on-surface-variant bg-surface-container-low rounded-2xl p-4">
+                Aún no hay gastos. Usa Registrar para anotar el primero.
+              </p>
+            ) : (
+              expenses.map((expense) => (
+                <article
+                  key={expense.id}
+                  className="bg-surface-container-low rounded-2xl p-3.5 space-y-1 border border-outline-variant/15"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="font-headline font-bold text-sm text-on-surface">{expense.concept}</p>
+                      <p className="text-[11px] text-on-surface-variant">
+                        {categoryNameById(expense.categoryId)} · {expense.date}
+                      </p>
+                    </div>
+                    <span className="font-headline font-bold text-primary shrink-0">
+                      {formatMoney(expense.amount)}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-on-surface">
+                    {expense.receipt} · {expense.responsible}
+                  </p>
+                </article>
+              ))
+            )}
+          </div>
+        )}
+
+        {expenseTab === 'registrar' && (
+          <form onSubmit={handleRegisterExpense} className="space-y-3">
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-on-surface">Fecha</span>
+              <input
+                className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                value={expenseForm.date}
+                onChange={(event) => setExpenseForm((prev) => ({ ...prev, date: event.target.value }))}
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-on-surface">Categoría</span>
+              <select
+                className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                value={expenseForm.categoryId}
+                onChange={(event) => setExpenseForm((prev) => ({ ...prev, categoryId: event.target.value }))}
+              >
+                {categories.length === 0 && <option value="">Crea una categoría primero</option>}
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-on-surface">Concepto</span>
+              <input
+                className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                placeholder="Ej. Insumos de botiquín"
+                value={expenseForm.concept}
+                onChange={(event) => setExpenseForm((prev) => ({ ...prev, concept: event.target.value }))}
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-on-surface">Monto (USD)</span>
+              <input
+                className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                inputMode="decimal"
+                placeholder="45,20"
+                value={expenseForm.amount}
+                onChange={(event) => setExpenseForm((prev) => ({ ...prev, amount: event.target.value }))}
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-on-surface">Comprobante</span>
+              <input
+                className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                placeholder="Fac. #001-002-8921"
+                value={expenseForm.receipt}
+                onChange={(event) => setExpenseForm((prev) => ({ ...prev, receipt: event.target.value }))}
+              />
+            </label>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold text-on-surface">Responsable</span>
+              <input
+                className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                placeholder="Tesorería"
+                value={expenseForm.responsible}
+                onChange={(event) => setExpenseForm((prev) => ({ ...prev, responsible: event.target.value }))}
+              />
+            </label>
+            <button type="submit" className="btn-action w-full bg-primary text-on-primary">
+              Guardar gasto
+            </button>
+          </form>
+        )}
+
+        {expenseTab === 'config' && (
+          <div className="space-y-3">
+            <form onSubmit={handleAddCategory} className="space-y-2">
+              <label className="block space-y-1">
+                <span className="text-xs font-semibold text-on-surface">Nueva categoría</span>
+                <input
+                  className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
+                  placeholder="Ej. Premiación"
+                  value={categoryName}
+                  onChange={(event) => setCategoryName(event.target.value)}
+                />
+              </label>
+              <button type="submit" className="btn-action w-full bg-secondary text-on-secondary">
+                Crear categoría
+              </button>
+            </form>
+            <ul className="space-y-2">
+              {categories.map((category) => {
+                const count = expenses.filter((expense) => expense.categoryId === category.id).length;
+                return (
+                  <li
+                    key={category.id}
+                    className="flex items-center justify-between bg-surface-container-low rounded-2xl px-3.5 py-3 text-sm"
+                  >
+                    <span className="font-semibold text-on-surface">{category.name}</span>
+                    <span className="text-[11px] font-bold text-primary">
+                      {count} gasto{count === 1 ? '' : 's'}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+      </section>
+
       {/* Segment Switch Móvil de Períodos */}
       <div className="w-full bg-surface-container-high p-1 rounded-xl shadow-sm flex items-center gap-1 select-none border border-outline-variant/20">
         <button
@@ -348,7 +584,7 @@ Firmado por:
                 <button
                   type="button"
                   onClick={() => handleDocumentAction(doc)}
-                  className="h-9 px-3 bg-surface-container-high text-primary rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-primary hover:text-on-primary transition-all active:scale-95"
+                  className="btn-action bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-95"
                 >
                   <span className="material-symbols-outlined text-[16px]">visibility</span>
                   <span>Ver</span>
@@ -457,7 +693,7 @@ Firmado por:
       {/* Modal: Vista Previa y Descarga de Documento */}
       {selectedDocPreview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="w-full max-w-md bg-surface-container-lowest rounded-2xl p-5 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[85vh] overflow-y-auto">
+          <div className="w-full max-w-md bg-surface-container-lowest rounded-3xl p-7 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-surface-variant pb-2">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary text-[22px]">
@@ -497,11 +733,11 @@ Firmado por:
               </div>
             </div>
 
-            <div className="flex gap-2 pt-1">
+            <div className="btn-row pt-1">
               <button
                 type="button"
                 onClick={() => setSelectedDocPreview(null)}
-                className="flex-1 h-11 rounded-lg bg-surface-container-high text-on-surface-variant text-xs font-bold"
+                className="btn-action flex-1 bg-surface-container-high text-on-surface-variant"
               >
                 Cerrar
               </button>
@@ -511,7 +747,7 @@ Firmado por:
                   handleDownloadDoc(selectedDocPreview);
                   setSelectedDocPreview(null);
                 }}
-                className="flex-1 h-11 rounded-lg bg-primary text-on-primary text-xs font-bold shadow-md hover:bg-primary-container flex items-center justify-center gap-1.5"
+                className="btn-action flex-1 bg-primary text-on-primary shadow-md hover:bg-primary-container"
               >
                 <span className="material-symbols-outlined text-[18px]">download</span>
                 <span>Descargar Archivo</span>
@@ -524,7 +760,7 @@ Firmado por:
       {/* Modal: Carpeta Pública de Comprobantes SRI */}
       {showReceiptsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="w-full max-w-md bg-surface-container-lowest rounded-2xl p-5 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[85vh] overflow-y-auto">
+          <div className="w-full max-w-md bg-surface-container-lowest rounded-3xl p-7 shadow-2xl border border-outline-variant/30 space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-surface-variant pb-2">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary text-[22px]">
@@ -608,7 +844,7 @@ Firmado por:
                 setShowReceiptsModal(false);
                 onShowToast('Comprobantes verificados');
               }}
-              className="w-full h-11 rounded-lg bg-primary text-on-primary text-xs font-bold"
+              className="btn-action w-full bg-primary text-on-primary"
             >
               Entendido
             </button>

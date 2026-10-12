@@ -106,7 +106,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
             search
           </span>
           <input
-            className="w-full h-11 pl-10 pr-9 bg-surface-container-lowest rounded-lg text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary shadow-sm border border-outline-variant/20"
+            className="w-full h-11 pl-10 pr-9 bg-surface-container-lowest rounded-full text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary shadow-sm border border-outline-variant/20"
             placeholder="Buscar por eje, meta o palabras clave..."
             type="search"
             value={searchQuery}
@@ -174,7 +174,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
       </div>
 
       {/* Barra de Acciones / Compartir Rápido */}
-      <div className="flex items-center justify-between bg-surface-container-low p-2.5 rounded-lg shadow-sm border border-outline-variant/20">
+      <div className="flex flex-wrap items-center justify-between gap-2 bg-surface-container-low p-3 rounded-2xl shadow-sm border border-outline-variant/20">
         <div className="flex items-center gap-2 min-w-0">
           <span className="material-symbols-outlined text-primary text-[20px] shrink-0">
             picture_as_pdf
@@ -183,11 +183,11 @@ export const PlanView: React.FC<PlanViewProps> = ({
             Resumen Ejecutivo Oficial
           </span>
         </div>
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="btn-row shrink-0">
           <button
             type="button"
             onClick={handleShare}
-            className="inline-flex items-center gap-1 bg-surface-container-lowest text-on-surface px-2.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm active:scale-95 transition-transform border border-outline-variant/20 hover:bg-surface-variant"
+            className="btn-action bg-surface-container-lowest text-on-surface font-semibold shadow-sm active:scale-95 transition-transform border border-outline-variant/20 hover:bg-surface-variant"
           >
             <span className="material-symbols-outlined text-[16px]">share</span>
             <span>Compartir</span>
@@ -195,7 +195,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
           <button
             type="button"
             onClick={handleDownloadSummary}
-            className="inline-flex items-center gap-1 bg-secondary text-on-secondary px-2.5 py-1.5 rounded-lg text-xs font-bold shadow-sm active:scale-95 transition-transform hover:bg-secondary/90"
+            className="btn-action bg-secondary text-on-secondary shadow-sm active:scale-95 transition-transform hover:bg-secondary/90"
           >
             <span className="material-symbols-outlined text-[16px]">download</span>
             <span>Descargar</span>
