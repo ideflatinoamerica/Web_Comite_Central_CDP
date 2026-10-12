@@ -277,7 +277,7 @@ Firmado por:
                   >
                     <span className="font-semibold text-on-surface">{category.name}</span>
                     <span className="text-[11px] font-bold text-primary">
-                      {count} gasto{count === 1 ? '' : 's'}
+                      {count === 1 ? '1 gasto' : `${count} gastos`}
                     </span>
                   </li>
                 );
