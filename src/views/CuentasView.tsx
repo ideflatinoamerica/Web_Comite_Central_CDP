@@ -124,7 +124,7 @@ Firmado por:
       <section className="bg-surface-container-lowest rounded-3xl p-4 shadow-sm border border-outline-variant/20 space-y-3">
         <div>
           <h2 className="font-headline font-bold text-sm text-on-surface">Gastos del comité</h2>
-          <p className="text-[11px] text-on-surface-variant">
+          <p className="text-[11px] text-on-surface-variant lg:max-w-[65ch]">
             Las categorías se crean en Configuración. Lista muestra lo registrado y Registrar anota un gasto nuevo.
           </p>
         </div>
@@ -152,7 +152,7 @@ Firmado por:
         </div>
 
         {expenseTab === 'lista' && (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))]">
             {expenses.length === 0 ? (
               <p className="text-xs text-on-surface-variant bg-surface-container-low rounded-2xl p-4">
                 Aún no hay gastos. Usa Registrar para anotar el primero.
@@ -184,7 +184,7 @@ Firmado por:
         )}
 
         {expenseTab === 'registrar' && (
-          <form onSubmit={handleRegisterExpense} className="space-y-3">
+          <form onSubmit={handleRegisterExpense} className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
             <label className="block space-y-1">
               <span className="text-xs font-semibold text-on-surface">Fecha</span>
               <input
@@ -245,7 +245,7 @@ Firmado por:
                 onChange={(event) => setExpenseForm((prev) => ({ ...prev, responsible: event.target.value }))}
               />
             </label>
-            <button type="submit" className="btn-action w-full bg-primary text-on-primary">
+            <button type="submit" className="btn-action w-full bg-primary text-on-primary lg:col-span-full">
               Guardar gasto
             </button>
           </form>
@@ -253,8 +253,8 @@ Firmado por:
 
         {expenseTab === 'config' && (
           <div className="space-y-3">
-            <form onSubmit={handleAddCategory} className="space-y-2">
-              <label className="block space-y-1">
+            <form onSubmit={handleAddCategory} className="flex flex-col gap-2 lg:flex-row lg:items-end">
+              <label className="block space-y-1 lg:flex-1">
                 <span className="text-xs font-semibold text-on-surface">Nueva categoría</span>
                 <input
                   className="w-full h-11 px-4 rounded-full bg-surface-container-low border border-outline-variant/20 text-sm"
@@ -263,11 +263,11 @@ Firmado por:
                   onChange={(event) => setCategoryName(event.target.value)}
                 />
               </label>
-              <button type="submit" className="btn-action w-full bg-secondary text-on-secondary">
+              <button type="submit" className="btn-action w-full bg-secondary text-on-secondary lg:w-auto lg:shrink-0">
                 Crear categoría
               </button>
             </form>
-            <ul className="space-y-2">
+            <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2">
               {categories.map((category) => {
                 const count = expenses.filter((expense) => expense.categoryId === category.id).length;
                 return (
@@ -317,7 +317,7 @@ Firmado por:
 
       {/* VISTA 1: GESTIÓN ACTUAL (2026-2027) */}
       {period === 'current' && (
-        <div className="flex flex-col space-y-4 animate-in fade-in duration-200">
+        <div className="flex flex-col gap-4 animate-in fade-in duration-200 lg:grid lg:grid-cols-2">
           {/* Estado de Caja Inicial y Propuesta */}
           <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary-container to-secondary text-on-primary p-4 shadow-md">
             <div className="flex justify-between items-start mb-3">
@@ -367,7 +367,7 @@ Firmado por:
                 <span className="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">
                   info
                 </span>
-                <p className="text-xs leading-snug">
+                <p className="text-xs leading-snug lg:max-w-[65ch]">
                   <strong className="text-on-surface font-semibold">
                     Carácter 100% Voluntario y No Excluyente:
                   </strong>{' '}
@@ -393,7 +393,7 @@ Firmado por:
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5 pt-1">
+            <div className="grid grid-cols-2 gap-2.5 pt-1 lg:grid-cols-1 xl:grid-cols-2">
               <div className="bg-surface-container-low p-3 rounded-lg flex flex-col justify-between">
                 <div className="flex items-center gap-1.5 text-primary mb-1.5">
                   <span className="material-symbols-outlined text-[18px]">calendar_clock</span>
@@ -437,9 +437,9 @@ Firmado por:
 
       {/* VISTA 2: MEMORIA HISTÓRICA (2025-2026) */}
       {period === 'past' && (
-        <div className="flex flex-col space-y-4 animate-in fade-in duration-200">
+        <div className="flex flex-col gap-4 animate-in fade-in duration-200 lg:grid lg:grid-cols-2">
           {/* Métricas Financieras Principales */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 lg:col-span-2">
             {/* Ingresos */}
             <div className="bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between border border-outline-variant/20">
               <div className="flex items-center gap-1 text-primary mb-1">
@@ -498,7 +498,7 @@ Firmado por:
                 </span>
               </div>
             </div>
-            <p className="text-xs text-on-surface-variant bg-surface-container-low p-2.5 rounded-lg leading-relaxed">
+            <p className="text-xs text-on-surface-variant bg-surface-container-low p-2.5 rounded-lg leading-relaxed lg:max-w-[65ch]">
               El arqueo de actas salientes arrojó una divergencia contable menor de{' '}
               <strong>USD $5,49</strong> entre el libro físico de tesorería y la libreta bancaria de ahorros. Por rigor estatutario, este saldo no se imputó al gasto y se encuentra bajo verificación documentaria con el comité saliente.
             </p>
@@ -563,7 +563,7 @@ Firmado por:
           <span className="text-[11px] text-on-surface-variant font-medium">PDF Firmados</span>
         </div>
 
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
           {INITIAL_DOCUMENTS.map((doc) => (
             <div
               key={doc.id}
@@ -606,7 +606,7 @@ Firmado por:
           </h3>
         </div>
 
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
           {/* FAQ 1 */}
           <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border border-outline-variant/20">
             <button
@@ -627,7 +627,7 @@ Firmado por:
             </button>
             {expandedFaq === 'faq-1' && (
               <div className="px-3.5 pb-3.5 pt-0 text-on-surface-variant text-xs space-y-1.5">
-                <div className="p-2.5 bg-surface-container-low rounded-lg leading-relaxed">
+                <div className="p-2.5 bg-surface-container-low rounded-lg leading-relaxed lg:max-w-[65ch]">
                   No. La normativa del Ministerio de Educación y el Estatuto de la UEP CDP estipulan expresamente que ningún valor gestionado por el Comité Central tiene carácter forzoso o condicionante. El aporte es 100% colaborativo y busca apoyar a las selecciones estudiantiles en transporte y materiales.
                 </div>
               </div>
@@ -654,7 +654,7 @@ Firmado por:
             </button>
             {expandedFaq === 'faq-2' && (
               <div className="px-3.5 pb-3.5 pt-0 text-on-surface-variant text-xs space-y-1.5">
-                <div className="p-2.5 bg-surface-container-low rounded-lg leading-relaxed">
+                <div className="p-2.5 bg-surface-container-low rounded-lg leading-relaxed lg:max-w-[65ch]">
                   Cualquier padre o tutor legal acreditado puede solicitar una revisión de libros con anticipación de 48 horas mediante correo formal a fiscalizacion@uepcdp.edu.ec, o consultar la sección pública de respaldos con facturas electrónicas digitalizadas.
                 </div>
               </div>
@@ -681,7 +681,7 @@ Firmado por:
             </button>
             {expandedFaq === 'faq-3' && (
               <div className="px-3.5 pb-3.5 pt-0 text-on-surface-variant text-xs space-y-1.5">
-                <div className="p-2.5 bg-surface-container-low rounded-lg leading-relaxed">
+                <div className="p-2.5 bg-surface-container-low rounded-lg leading-relaxed lg:max-w-[65ch]">
                   No existen sanciones, listas públicas ni distinciones. El presupuesto global se ajusta solidariamente priorizando siempre emergencias médicas en competiciones y mantenimiento esencial de áreas de práctica compartidas.
                 </div>
               </div>

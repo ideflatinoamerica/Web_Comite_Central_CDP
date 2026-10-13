@@ -23,7 +23,7 @@ const NAV_ITEMS: NavItem[] = [
 export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
   return (
     <nav className="fixed bottom-0 inset-x-0 z-50 pb-safe bg-[#fcf9f8]/95 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,0,0,0.05)] border-t border-surface-variant/40">
-      <div className="max-w-2xl mx-auto flex justify-around items-center h-16 px-1">
+      <div className="w-full max-w-2xl mx-auto flex justify-around items-center h-16 px-1 lg:max-w-[90rem] lg:w-full lg:justify-between lg:px-8">
         {NAV_ITEMS.map((item) => {
           const isActive = activeTab === item.key;
           return (
@@ -34,7 +34,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) 
                 onTabChange(item.key);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`flex flex-col items-center justify-center flex-1 h-full min-h-[44px] transition-all group ${
+              className={`flex flex-col items-center justify-center flex-1 h-full min-h-[44px] transition-all group lg:flex-none lg:min-w-[4.5rem] lg:px-3 ${
                 isActive
                   ? 'text-primary-container font-semibold'
                   : 'text-on-surface-variant hover:text-on-surface'

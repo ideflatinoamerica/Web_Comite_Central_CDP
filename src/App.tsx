@@ -244,7 +244,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#fcf9f8] min-h-screen text-[#1c1b1b] flex flex-col antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <div className="min-h-screen text-[#1c1b1b] flex flex-col overflow-x-clip antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
       {/* Header */}
       <Header
         activeTab={activeTab}
@@ -256,7 +256,7 @@ export default function App() {
       />
 
       {/* Main Content View Container */}
-      <main className="flex-1 flex flex-col relative w-full max-w-2xl mx-auto px-4 pt-16 pb-20 bg-[#fcf9f8]">
+      <main className="flex-1 flex flex-col relative w-full max-w-2xl mx-auto px-4 pt-16 pb-20 bg-[#fcf9f8] lg:max-w-[90rem] lg:w-full lg:px-8">
         {activeTab === 'inicio' && (
           <InicioView
             onNavigate={handleNavigate}
@@ -330,7 +330,7 @@ export default function App() {
       {toastMessage && (
         <div
           role="status"
-          className="fixed bottom-20 left-4 right-4 max-w-sm mx-auto z-50 bg-[#1c1b1b] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-5 duration-200"
+          className="fixed bottom-20 left-4 right-4 max-w-sm mx-auto z-50 bg-[#1c1b1b] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-5 duration-200 lg:left-1/2 lg:right-auto lg:-translate-x-1/2"
         >
           <div className="flex items-center gap-2 min-w-0">
             <span className="material-symbols-outlined text-[#fdbb12] text-[20px] shrink-0">

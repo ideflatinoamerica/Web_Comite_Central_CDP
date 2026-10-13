@@ -54,7 +54,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
   }, [selectedMonth, selectedCategory]);
 
   return (
-    <div className="flex flex-col w-full pb-6 space-y-4">
+    <div className="flex flex-col w-full pb-6 gap-4">
       {/* Resumen Dinámico & Alerta Institucional */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary-container via-primary to-on-primary-fixed text-on-primary p-4 shadow-md">
         <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/10 blur-xl pointer-events-none" />
@@ -71,7 +71,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
             <h2 className="font-headline font-bold text-xl sm:text-2xl text-on-primary tracking-tight">
               Agenda Deportiva y Escolar
             </h2>
-            <p className="text-xs text-on-primary-container mt-1">
+            <p className="text-xs text-on-primary-container mt-1 lg:max-w-[65ch]">
               Sincroniza tus actividades formativas y asambleas del Comité Central.
             </p>
           </div>
@@ -122,9 +122,9 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
           <span className="text-xs text-on-surface-variant font-bold uppercase tracking-wider">
             Ciclo Escolar
           </span>
-          <span className="text-[11px] text-primary font-bold">Desliza para explorar</span>
+          <span className="text-[11px] text-primary font-bold lg:hidden">Desliza para explorar</span>
         </div>
-        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar scroll-smooth">
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar scroll-smooth lg:grid lg:grid-cols-[repeat(auto-fit,minmax(4.5rem,1fr))] lg:overflow-visible">
           {MONTHS.map((m) => {
             const isSelected = selectedMonth === m.code;
             return (
@@ -132,7 +132,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
                 key={m.code}
                 type="button"
                 onClick={() => setSelectedMonth(m.code)}
-                className={`shrink-0 flex flex-col items-center justify-center min-w-[62px] h-16 rounded-xl transition-all shadow-sm ${
+                className={`shrink-0 flex flex-col items-center justify-center min-w-[62px] h-16 rounded-xl transition-all shadow-sm lg:min-w-0 lg:w-full ${
                   isSelected
                     ? 'bg-primary text-on-primary ring-2 ring-primary ring-offset-1'
                     : 'bg-surface-container text-on-surface hover:bg-surface-variant'
@@ -153,7 +153,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
       </div>
 
       {/* Tabs por Categoría */}
-      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:grid lg:grid-cols-5 lg:overflow-visible">
         {CATEGORIES.map((cat) => {
           const isSelected = selectedCategory === cat.code;
           return (
@@ -161,7 +161,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
               key={cat.code}
               type="button"
               onClick={() => setSelectedCategory(cat.code)}
-              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all lg:w-full lg:justify-center ${
                 isSelected
                   ? 'bg-primary text-on-primary shadow-sm'
                   : 'bg-surface-container text-on-surface hover:bg-surface-variant'
@@ -191,7 +191,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
         </div>
 
         {/* Feed Container */}
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))]">
           {filteredEvents.map((evt) => {
             const isSaved = !!bookmarkedEvents[evt.id];
             return (
@@ -236,7 +236,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
                     <h3 className="font-headline font-bold text-xs sm:text-sm text-on-surface tracking-tight">
                       {evt.title}
                     </h3>
-                    <p className="text-xs text-on-surface-variant mt-0.5 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-on-surface-variant mt-0.5 line-clamp-2 leading-relaxed lg:max-w-[65ch]">
                       {evt.description}
                     </p>
                   </div>
@@ -313,7 +313,7 @@ export const AgendaView: React.FC<AgendaViewProps> = ({
           <span className="font-headline font-bold text-xs sm:text-sm text-on-surface">
             Verificación y Validez Institucional
           </span>
-          <p className="text-xs text-on-surface-variant mt-0.5 leading-relaxed">
+          <p className="text-xs text-on-surface-variant mt-0.5 leading-relaxed lg:max-w-[65ch]">
             Las fechas y horarios están sujetos a ratificación según el calendario de competencias de la Concentración Deportiva de Pichincha y disposiciones ministeriales. Los cambios serán notificados vía boletín digital del Comité.
           </p>
           <div className="flex items-center gap-2 mt-2 pt-1 border-t border-outline-variant/20 text-[11px]">

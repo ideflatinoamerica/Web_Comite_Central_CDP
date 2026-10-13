@@ -62,7 +62,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full pb-6 space-y-4">
+    <div className="flex flex-col w-full pb-6 gap-4">
       {/* Banner Motivacional & Visión Institucional */}
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-secondary p-4 text-on-primary shadow-sm">
         <div className="relative z-10 flex flex-col space-y-2">
@@ -78,7 +78,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
           <h2 className="font-headline font-bold text-xl sm:text-2xl tracking-tight text-white leading-tight">
             Ocho ejes para transformar la comunidad de familias
           </h2>
-          <p className="text-xs text-on-primary-container leading-relaxed">
+          <p className="text-xs text-on-primary-container leading-relaxed lg:max-w-[65ch]">
             Construcción participativa, rigor atlético y transparencia activa orientada al bienestar de nuestros estudiantes deportistas.
           </p>
           {/* Mini resumen métrico de consenso */}
@@ -99,9 +99,9 @@ export const PlanView: React.FC<PlanViewProps> = ({
       </div>
 
       {/* Buscador y Filtros de Categorías */}
-      <div className="flex flex-col space-y-2.5">
+      <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center">
         {/* Barra de búsqueda táctil */}
-        <div className="relative flex items-center w-full">
+        <div className="relative flex items-center w-full lg:flex-1 lg:min-w-0">
           <span className="absolute left-3 text-on-surface-variant material-symbols-outlined text-[20px] pointer-events-none">
             search
           </span>
@@ -125,7 +125,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
         </div>
 
         {/* Filtros de categoría horizontales scrolleables */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 lg:shrink-0">
           <button
             type="button"
             onClick={() => setSelectedCategory('all')}
@@ -215,7 +215,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
       </div>
 
       {/* Contenedor Principal de Ejes */}
-      <div className="flex flex-col space-y-3.5">
+      <div className="grid grid-cols-1 gap-3.5 lg:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))]">
         {filteredAxes.map((axis) => {
           const isLiked = !!userLikes[axis.id];
           const totalLikes = axis.initialLikes + (isLiked ? 1 : 0);
@@ -260,7 +260,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
                     </span>
                     {axis.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-on-surface mt-1 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-on-surface mt-1 leading-relaxed lg:max-w-[65ch]">
                     {axis.description}
                   </p>
                 </div>
