@@ -31,7 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-[#fcf9f8]/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe">
-      <div className="max-w-2xl mx-auto h-16 px-4 flex items-center justify-between gap-2">
+      <div className="w-full max-w-2xl mx-auto h-16 px-4 flex items-center justify-between gap-2 lg:max-w-[90rem] lg:w-full lg:px-8">
         {/* Brand Section */}
         <div className="flex items-center gap-2.5 min-w-0">
           <img

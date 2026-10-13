@@ -61,6 +61,17 @@
 }
 
 @layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   body {
     font-family: var(--font-body);
     background-color: #fcf9f8;
@@ -70,6 +81,22 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-headline);
+  }
+}
+
+/*
+ * Desktop-like devices can expose gutters around the centered application.
+ * The cream veil keeps the repeated crest subtle while touch devices retain
+ * the original solid background.
+ */
+@media (min-width: 43rem) and (hover: hover) and (pointer: fine) {
+  body {
+    background-image:
+      linear-gradient(rgba(252, 249, 248, 0.92), rgba(252, 249, 248, 0.92)),
+      url('/logo-colegio.png');
+    background-repeat: repeat;
+    background-size: auto, 22rem auto;
+    background-position: 0 0, 1.5rem 1.5rem;
   }
 }
 

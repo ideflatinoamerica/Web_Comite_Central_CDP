@@ -13,6 +13,14 @@ export const ASSETS = {
   leaderCarolina: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOTHTNWP3V0wSwgAGgT_Qdyo64S8aLLeO2oPISUZK4cCKBmiAzYcEvh9ygxhWyEc6gJDICT3eEeA0KEpVoMdgyxmyTyPGHDDNMIdC22AruR8uj6ko4q1Cgmb9WAX5xdARYp6yypbmo6ZYFCReLVJ-3GtWeSKIi4Y9xVbDMJZcWljYI6N7Mz1bHM4gUFhbB6ouCQjCbiVrwvrEGoJTAM0waj5_ZcW4fuENEblSgyph03PwPi1L1RkQR'
 };
 
+export interface LeadershipMember {
+  name: string;
+  status: 'Electo' | 'Electa' | 'Propuesto' | 'Propuesta';
+  role: string;
+  photo?: string;
+  email?: string;
+}
+
 export const INITIAL_AXES: PlanAxis[] = [
   {
     id: 'eje-01',
@@ -272,34 +280,44 @@ export const INITIAL_DOCUMENTS: DocumentItem[] = [
   }
 ];
 
-export const LEADERSHIP_TEAM = [
+export const LEADERSHIP_TEAM: LeadershipMember[] = [
   {
     name: 'Sergio Lira',
     status: 'Electo',
-    role: 'Presidente del Comité Central',
+    role: 'Presidente',
     photo: ASSETS.leaderSergio,
     email: 'presidencia@uepcdp.edu.ec'
   },
   {
     name: 'Luis Alejandro Yánez',
-    status: 'Propuesto',
+    status: 'Electo',
     role: 'Vicepresidente',
     photo: ASSETS.leaderLuis,
     email: 'vicepresidencia@uepcdp.edu.ec'
   },
   {
     name: 'Diana Ávila',
-    status: 'Propuesta',
+    status: 'Electa',
     role: 'Tesorera',
     photo: ASSETS.leaderDiana,
     email: 'tesoreria@uepcdp.edu.ec'
   },
   {
+    name: 'Gabriela Pazos',
+    status: 'Electa',
+    role: 'Secretaria'
+  },
+  {
     name: 'Carolina Larco',
-    status: 'Propuesta',
-    role: 'Vocal de Bienestar y Deportes',
+    status: 'Electa',
+    role: 'Vocal',
     photo: ASSETS.leaderCarolina,
     email: 'bienestar@uepcdp.edu.ec'
+  },
+  {
+    name: 'Valeria Zavala',
+    status: 'Electa',
+    role: 'Vocal'
   }
 ];
 

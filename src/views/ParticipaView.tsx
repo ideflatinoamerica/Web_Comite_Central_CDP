@@ -154,10 +154,10 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full pb-6 space-y-4">
+    <div className="flex flex-col w-full pb-6 gap-4 lg:grid lg:grid-cols-2 lg:items-start xl:grid-cols-3">
       {/* Banner Superior de Impacto / Orgullo Institucional */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary-container p-4 text-on-primary shadow-md">
-        <div className="relative z-10 flex flex-col space-y-1.5">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary-container p-4 text-on-primary shadow-md lg:col-span-full">
+        <div className="relative z-10 flex flex-col space-y-1.5 lg:max-w-3xl">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-tertiary-fixed px-2 py-0.5 text-[10px] text-on-tertiary-fixed font-bold tracking-wider uppercase">
               <span className="material-symbols-outlined text-[14px]">local_fire_department</span>
@@ -201,7 +201,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
       </div>
 
       {/* SECCIÓN 1: CANAL DE PROPUESTAS DE FAMILIAS */}
-      <section className="flex flex-col space-y-3">
+      <section className="flex flex-col space-y-3 lg:col-span-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-primary text-[22px]">diversity_3</span>
@@ -396,7 +396,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
       </section>
 
       {/* SECCIÓN 2: PROGRAMA PATROCINA A NUESTROS DEPORTISTAS */}
-      <section className="flex flex-col space-y-3.5 pt-2">
+      <section className="flex flex-col space-y-3.5 pt-2 lg:col-span-1 lg:pt-0">
         <div className="flex flex-col space-y-0.5">
           <div className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-tertiary-container text-[22px]">
@@ -406,7 +406,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
               Programa 'Patrocina un Atleta CDP'
             </h3>
           </div>
-          <p className="text-xs text-on-surface-variant">
+          <p className="text-xs text-on-surface-variant lg:max-w-[65ch]">
             Impulso prioritario para la disciplina de Taekwondo y ramas de alto rendimiento.
           </p>
         </div>
@@ -447,7 +447,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
                     1. Implementos y Equipamiento
                   </span>
                 </div>
-                <p className="text-xs text-on-surface-variant leading-snug">
+                <p className="text-xs text-on-surface-variant leading-snug lg:max-w-[65ch]">
                   Donación de doboks de entrenamiento, protectores tibiales, antebrazos y sacos de pateo para el dojang colegial.
                 </p>
                 <div className="pt-1 flex items-center gap-2">
@@ -473,7 +473,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
                     2. Becas de Graduación y Torneos
                   </span>
                 </div>
-                <p className="text-xs text-on-surface-variant leading-snug">
+                <p className="text-xs text-on-surface-variant leading-snug lg:max-w-[65ch]">
                   Cobertura de aranceles de exámenes de grados (cintas), homologación Kukkiwon y traslados a selectivos provinciales.
                 </p>
                 <div className="pt-1 flex items-center gap-2">
@@ -499,7 +499,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
                     3. Alianzas Corporativas y Salud
                   </span>
                 </div>
-                <p className="text-xs text-on-surface-variant leading-snug">
+                <p className="text-xs text-on-surface-variant leading-snug lg:max-w-[65ch]">
                   Empresas que proveen suplementación deportiva certificada, fisioterapia o hidratación para delegaciones de la UEP CDP.
                 </p>
                 <div className="pt-1">
@@ -579,7 +579,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
       </section>
 
       {/* SECCIÓN 3: PREGUNTAS FRECUENTES Y CONTACTO CON EL COMITÉ */}
-      <section className="flex flex-col space-y-2.5 pt-2">
+      <section className="flex flex-col space-y-2.5 pt-2 lg:col-span-2 lg:pt-0 xl:col-span-1">
         <div className="flex items-center gap-1.5">
           <span className="material-symbols-outlined text-primary text-[20px]">help</span>
           <h3 className="font-headline font-bold text-xs sm:text-sm text-on-surface">
@@ -588,7 +588,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
         </div>
 
         {/* FAQ Accordions */}
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-3 xl:grid-cols-1">
           {/* FAQ 1 */}
           <div className="bg-surface-container-lowest rounded-xl shadow-sm p-3.5 border border-outline-variant/20">
             <button
@@ -606,7 +606,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
               </span>
             </button>
             {openFaq === 1 && (
-              <p className="text-xs text-on-surface-variant pt-2 leading-relaxed">
+              <p className="text-xs text-on-surface-variant pt-2 leading-relaxed lg:max-w-[65ch]">
                 Cada aporte ingresa a la subcuenta mancomunada del Comité Central. Los comprobantes y actas de entrega de implementos se publican bimestralmente en la pestaña 'Cuentas' para auditoría total de los padres.
               </p>
             )}
@@ -629,7 +629,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
               </span>
             </button>
             {openFaq === 2 && (
-              <p className="text-xs text-on-surface-variant pt-2 leading-relaxed">
+              <p className="text-xs text-on-surface-variant pt-2 leading-relaxed lg:max-w-[65ch]">
                 La Comisión Académica y Bienestar Estudiantil del Comité Central, en articulación con el Departamento de Consejería Estudiantil (DECE) del colegio.
               </p>
             )}
@@ -652,7 +652,7 @@ export const ParticipaView: React.FC<ParticipaViewProps> = ({
               </span>
             </button>
             {openFaq === 3 && (
-              <p className="text-xs text-on-surface-variant pt-2 leading-relaxed">
+              <p className="text-xs text-on-surface-variant pt-2 leading-relaxed lg:max-w-[65ch]">
                 ¡Sí! Contamos con el 'Banco de Protección Solidario'. Cascos, canilleras y empeineras en óptimas condiciones son reacondicionados y entregados a deportistas de iniciación.
               </p>
             )}
